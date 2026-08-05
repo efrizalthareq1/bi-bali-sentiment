@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Pertumbuhan PDRB Bali</title>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --up: #22c55e;
+      --down: #ef4444;
+      --warn: #f59e0b;
+      --border: #334155;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: linear-gradient(160deg, #0f172a 0%, #1e293b 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+    header { margin-bottom: 24px; }
+    h1 { margin: 0 0 8px; font-size: 2rem; }
+    .subtitle { color: var(--muted); margin: 0; }
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      align-items: end;
+    }
+    label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 6px; }
+    select, input[type=file], button {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #0b1220;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+    button {
+      background: linear-gradient(135deg, #0284c7, #6366f1);
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button:hover { filter: brightness(1.08); }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .metric {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .metric .label { color: var(--muted); font-size: 0.85rem; }
+    .metric .value { font-size: 1.6rem; font-weight: 700; margin-top: 6px; }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 960px) { .grid-2 { grid-template-columns: 1fr; } }
+    .chart-wrap { position: relative; height: 380px; }
+    .insights h2, .charts h2 { margin-top: 0; font-size: 1.15rem; }
+    .insight {
+      background: #0b1220;
+      border-left: 4px solid var(--accent);
+      border-radius: 0 10px 10px 0;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      line-height: 1.55;
+    }
+    .insight.inverse { border-left-color: var(--warn); }
+    .insight.positive { border-left-color: var(--up); }
+    .insight-title { font-weight: 700; margin-bottom: 6px; }
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      margin-right: 6px;
+    }
+    .tag.up { background: rgba(34,197,94,.15); color: var(--up); }
+    .tag.down { background: rgba(239,68,68,.15); color: var(--down); }
+    .tag.flat { background: rgba(148,163,184,.15); color: var(--muted); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th, td { border-bottom: 1px solid var(--border); padding: 8px; text-align: left; }
+    th { color: var(--muted); font-weight: 600; }
+    .status { color: var(--muted); font-size: 0.9rem; margin-top: 8px; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📊 Dashboard Pertumbuhan PDRB Bali</h1>
+      <p class="subtitle">Analisis tren pertumbuhan ekonomi dengan insight otomatis antar sektor</p>
+    </header>
+
+    <section class="panel">
+      <div class="controls">
+        <div>
+          <label for="fileInput">File Excel</label>
+          <input type="file" id="fileInput" accept=".xlsx,.xls" />
+        </div>
+        <div>
+          <label for="sheetSelect">Sheet</label>
+          <select id="sheetSelect" disabled><option>Pilih file dulu</option></select>
+        </div>
+        <div>
+          <label for="subjectSelect">Subyek / Indikator</label>
+          <select id="subjectSelect" disabled><option>Pilih sheet dulu</option></select>
+        </div>
+        <div>
+          <label>&nbsp;</label>
+          <button id="loadDefaultBtn" type="button">Muat file default (Downloads)</button>
+        </div>
+      </div>
+      <p class="status" id="status">Upload file <strong>Prompt Indikator Bali_NEW.xlsx</strong> atau klik tombol muat default.</p>
+    </section>
+
+    <section class="metrics hidden" id="metricsSection">
+      <div class="metric"><div class="label">Nilai Terakhir</div><div class="value" id="mLatest">-</div></div>
+      <div class="metric"><div class="label">Arah Tren</div><div class="value" id="mTrend">-</div></div>
+      <div class="metric"><div class="label">Rata-rata Terakhir</div><div class="value" id="mAvg">-</div></div>
+      <div class="metric"><div class="label">Jumlah Periode</div><div class="value" id="mPeriods">-</div></div>
+    </section>
+
+    <section class="grid-2 hidden" id="chartsSection">
+      <div class="panel charts">
+        <h2>Tren Pertumbuhan</h2>
+        <div class="chart-wrap"><canvas id="trendChart"></canvas></div>
+      </div>
+      <div class="panel">
+        <h2>Data Periode</h2>
+        <div style="max-height:380px; overflow:auto;">
+          <table id="dataTable"><thead></thead><tbody></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel insights hidden" id="insightsSection">
+      <h2>💡 Insight Otomatis</h2>
+      <div id="summaryInsight"></div>
+      <div id="insightsList"></div>
+    </section>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>
