@@ -162,7 +162,7 @@ export function DashboardClient() {
             Dashboard Sentimen
           </h1>
           <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-            Monitoring percakapan publik — default fokusokus ke{" "}
+            Monitoring percakapan publik — default fokus ke{" "}
             <span className="font-medium text-foreground">QRIS Summer Run</span>.
           </p>
         </div>
