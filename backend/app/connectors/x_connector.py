@@ -49,6 +49,8 @@ NETIZEN_TOPIC_QUERIES = [
     '"BI-Rate" (naik OR turun OR tetap) (site:x.com OR site:twitter.com)',
     '"QRIS" (Bank Indonesia OR BI) (site:x.com OR site:twitter.com)',
     '"QRIS Run" (site:x.com OR site:twitter.com)',
+    '"QRIS Summer Run" (site:x.com OR site:twitter.com)',
+    'qrissummerrun (site:x.com OR site:twitter.com)',
     '"GPIPS" OR "GPIB" (Bank Indonesia OR BI) (site:x.com OR site:twitter.com)',
     '"Bank Indonesia Bali" OR "BI Bali" OR KPwBI (site:x.com OR site:twitter.com)',
     'rupiah (menguat OR melemah OR "Bank Indonesia") (site:x.com OR site:twitter.com)',
@@ -223,7 +225,7 @@ class XConnector(BaseConnector):
             "inflasi BI",
         ]
         search_terms = list(keys)
-        for extra in ("Bank Indonesia inflasi", "QRIS Run", "BI Bali", "GPIPS"):
+        for extra in ("Bank Indonesia inflasi", "QRIS Summer Run", "QRIS Run", "qrissummerrun", "BI Bali", "GPIPS"):
             if extra not in search_terms:
                 search_terms.append(extra)
         search_terms = search_terms[:8]

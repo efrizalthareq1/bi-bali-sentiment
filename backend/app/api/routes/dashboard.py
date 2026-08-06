@@ -6,7 +6,7 @@ from typing import Optional
 import re
 
 from fastapi import APIRouter, Depends
-from sqlalchemy import case, func
+from sqlalchemy import case, func, or_
 from sqlalchemy.orm import Session
 
 from app.constants import STOPWORDS_ID
@@ -26,12 +26,27 @@ from app.services.sna import build_sna_graph
 router = APIRouter(prefix="/dashboard", tags=["dashboard"])
 
 
+def _text_search_filter(q: Optional[str]):
+    if not q:
+        return None
+    parts = [p.strip() for p in re.split(r"\s+OR\s+|\|", q, flags=re.I) if p.strip()]
+    if not parts:
+        return None
+    clauses = []
+    for part in parts:
+        like = f"%{part}%"
+        clauses.append(Post.text_raw.ilike(like))
+        clauses.append(Post.keyword_matched.ilike(like))
+    return or_(*clauses)
+
+
 def _base_filters(
     query,
     source: Optional[str],
     date_from: Optional[datetime],
     date_to: Optional[datetime],
     keyword: Optional[str],
+    q: Optional[str] = None,
 ):
     if source:
         query = query.filter(Post.source == source)
@@ -41,6 +56,9 @@ def _base_filters(
         query = query.filter(Post.posted_at <= date_to)
     if keyword:
         query = query.filter(Post.keyword_matched.ilike(f"%{keyword}%"))
+    text_filter = _text_search_filter(q)
+    if text_filter is not None:
+        query = query.filter(text_filter)
     return query
 
 
@@ -51,9 +69,10 @@ def dashboard_overview(
     date_to: Optional[datetime] = None,
     keyword: Optional[str] = None,
     sentiment: Optional[str] = None,
+    q: Optional[str] = None,
     db: Session = Depends(get_db),
 ):
-    posts_q = _base_filters(db.query(Post), source, date_from, date_to, keyword)
+    posts_q = _base_filters(db.query(Post), source, date_from, date_to, keyword, q)
     if sentiment:
         posts_q = posts_q.join(SentimentScore).filter(SentimentScore.sentiment == sentiment)
 
@@ -64,7 +83,7 @@ def dashboard_overview(
         db.query(SentimentScore.sentiment, func.count(SentimentScore.id))
         .join(Post)
     )
-    sent_q = _base_filters(sent_q, source, date_from, date_to, keyword)
+    sent_q = _base_filters(sent_q, source, date_from, date_to, keyword, q)
     if sentiment:
         sent_q = sent_q.filter(SentimentScore.sentiment == sentiment)
     sent_rows = dict(sent_q.group_by(SentimentScore.sentiment).all())
@@ -98,7 +117,7 @@ def dashboard_overview(
         )
         .join(Post, SentimentScore.post_id == Post.id)
     )
-    trend_q = _base_filters(trend_q, source, date_from, date_to, keyword)
+    trend_q = _base_filters(trend_q, source, date_from, date_to, keyword, q)
     if sentiment:
         trend_q = trend_q.filter(SentimentScore.sentiment == sentiment)
     trend_rows = trend_q.group_by(day_expr).order_by(day_expr).all()
@@ -124,7 +143,7 @@ def dashboard_overview(
         )
         .outerjoin(SentimentScore)
     )
-    plat_q = _base_filters(plat_q, source, date_from, date_to, keyword)
+    plat_q = _base_filters(plat_q, source, date_from, date_to, keyword, q)
     if sentiment:
         plat_q = plat_q.filter(SentimentScore.sentiment == sentiment)
     platforms = [
@@ -150,7 +169,7 @@ def dashboard_overview(
         .join(Post)
         .filter(SentimentScore.topic_tag.isnot(None))
     )
-    topic_q = _base_filters(topic_q, source, date_from, date_to, keyword)
+    topic_q = _base_filters(topic_q, source, date_from, date_to, keyword, q)
     if sentiment:
         topic_q = topic_q.filter(SentimentScore.sentiment == sentiment)
     topics = [
@@ -168,7 +187,7 @@ def dashboard_overview(
     ]
 
     # Word cloud from recent texts
-    text_q = _base_filters(db.query(Post.text_raw), source, date_from, date_to, keyword)
+    text_q = _base_filters(db.query(Post.text_raw), source, date_from, date_to, keyword, q)
     if sentiment:
         text_q = text_q.join(SentimentScore).filter(SentimentScore.sentiment == sentiment)
     texts = [t[0] for t in text_q.order_by(Post.posted_at.desc()).limit(500).all()]

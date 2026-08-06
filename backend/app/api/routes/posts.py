@@ -2,9 +2,11 @@
 
 from datetime import datetime
 from typing import Optional
+import re
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import RedirectResponse
+from sqlalchemy import or_
 from sqlalchemy.orm import Session, joinedload
 
 from app.database import get_db
@@ -17,6 +19,20 @@ from app.services.url_resolve import (
 )
 
 router = APIRouter(prefix="/posts", tags=["posts"])
+
+
+def _apply_q_filter(query, q: Optional[str]):
+    if not q:
+        return query
+    parts = [p.strip() for p in re.split(r"\s+OR\s+|\|", q, flags=re.I) if p.strip()]
+    if not parts:
+        return query
+    clauses = []
+    for part in parts:
+        like = f"%{part}%"
+        clauses.append(Post.text_raw.ilike(like))
+        clauses.append(Post.keyword_matched.ilike(like))
+    return query.filter(or_(*clauses))
 
 
 @router.get("", response_model=PostListResponse)
@@ -42,8 +58,7 @@ def list_posts(
         query = query.filter(Post.posted_at <= date_to)
     if keyword:
         query = query.filter(Post.keyword_matched.ilike(f"%{keyword}%"))
-    if q:
-        query = query.filter(Post.text_raw.ilike(f"%{q}%"))
+    query = _apply_q_filter(query, q)
     if sentiment or topic:
         query = query.join(SentimentScore, isouter=False)
         if sentiment:

@@ -248,11 +248,7 @@ class InstagramCommentFetcher:
         hint = ""
 
         with httpx.Client(timeout=40.0, headers=headers, cookies=cookies, follow_redirects=True) as client:
-            # Warm session (Instagram sometimes requires landing on profile first)
-            warm = client.get(f"https://www.instagram.com/{self.username}/")
-            if warm.status_code not in (200, 302):
-                logger.warning("Profile warm-up status %s", warm.status_code)
-
+            # Skip HTML warm-up: extra page hits worsen 429 on rate-limited sessions.
             profile = client.get(
                 "https://www.instagram.com/api/v1/users/web_profile_info/",
                 params={"username": self.username},
@@ -275,7 +271,12 @@ class InstagramCommentFetcher:
                         "Login ulang di browser → salin ulang cookie → update Railway → redeploy api."
                     )
                 elif profile.status_code == 429:
-                    hint = "Instagram rate limit (HTTP 429). Coba lagi 10–30 menit kemudian."
+                    hint = (
+                        "Instagram rate limit (HTTP 429). Cookie mungkin sudah benar, "
+                        "tapi Instagram memblokir akses otomatis ke endpoint profil. "
+                        "Jangan spam request. Tunggu 6–24 jam, atau ganti ke akun IG lain, "
+                        "atau pakai Meta Graph API (Opsi A resmi)."
+                    )
                 else:
                     hint = (
                         f"Gagal ambil profil @{self.username} (HTTP {profile.status_code}): {err_msg}. "
@@ -421,7 +422,6 @@ def diagnose_instagram_session(username: str = DEFAULT_MONITOR_USERNAME) -> dict
     cookies = fetcher._session_cookies(session_id, csrf)
     try:
         with httpx.Client(timeout=35.0, headers=headers, cookies=cookies, follow_redirects=True) as client:
-            client.get(f"https://www.instagram.com/{fetcher.username}/")
             profile = client.get(
                 "https://www.instagram.com/api/v1/users/web_profile_info/",
                 params={"username": fetcher.username},
@@ -440,7 +440,11 @@ def diagnose_instagram_session(username: str = DEFAULT_MONITOR_USERNAME) -> dict
                         "(login ulang di browser), update Railway, redeploy api."
                     )
                 elif profile.status_code == 429:
-                    out["hint"] = "Rate limit Instagram. Coba lagi nanti."
+                    out["hint"] = (
+                        "Instagram memblokir akses otomatis (HTTP 429). "
+                        "Jangan spam tes. Tunggu 6–24 jam, coba cookie akun IG lain, "
+                        "atau pakai Meta Graph API resmi."
+                    )
                 else:
                     out["hint"] = (
                         f"HTTP {profile.status_code} dari Instagram. "

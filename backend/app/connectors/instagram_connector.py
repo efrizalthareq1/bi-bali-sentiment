@@ -222,13 +222,16 @@ class InstagramConnector(BaseConnector):
             "inflasi",
             "GPIPS",
             "BI Bali",
+            "QRIS Summer Run",
             "QRIS Run",
+            "qrissummerrun",
         ]
         queries = [f'"{kw}" site:instagram.com' for kw in keys[:6]]
         queries.extend(
             [
                 '"Bank Indonesia" (QRIS OR inflasi OR GPIPS) site:instagram.com',
-                '"QRIS Run" site:instagram.com',
+                '"QRIS Summer Run" OR "QRIS Run" site:instagram.com',
+                "qrissummerrun site:instagram.com",
                 '"BI Bali" OR KPwBI site:instagram.com',
             ]
         )

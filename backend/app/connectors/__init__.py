@@ -177,17 +177,23 @@ def sync_connector(db: Session, connector_id: str, limit: int = 50) -> tuple[int
             db, limit=get_settings().instagram_hashtag_sync_limit
         )
         keywords = text_kw[:10] + ig_tags[:8]
+        if "QRIS Summer Run" not in keywords:
+            keywords = ["QRIS Summer Run", *keywords]
         if "QRIS Run" not in keywords:
             keywords = ["QRIS Run", *keywords]
+        if "qrissummerrun" not in keywords:
+            keywords = ["qrissummerrun", *keywords]
     elif connector_id == "tiktok":
         text_kw = sorted(get_active_keywords(db), key=_news_keyword_priority)[:8]
         ig_tags = get_active_instagram_hashtags(db, limit=8)
         keywords = text_kw + ig_tags
     else:
         keywords = sorted(get_active_keywords(db), key=_news_keyword_priority)
-        # Ensure QRIS Run is always searched on social/news connectors
-        if connector_id in {"news", "x", "youtube", "threads"} and "QRIS Run" not in keywords:
-            keywords = ["QRIS Run", *keywords]
+        # Ensure QRIS Summer Run topics are always searched on social/news connectors
+        if connector_id in {"news", "x", "youtube", "threads"}:
+            for extra in ("QRIS Summer Run", "QRIS Run", "qrissummerrun"):
+                if extra not in keywords:
+                    keywords = [extra, *keywords]
 
     raw_posts = connector.fetch_posts(keywords, limit=limit)
     inserted, skipped = persist_raw_posts(db, raw_posts)

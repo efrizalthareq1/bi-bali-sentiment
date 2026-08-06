@@ -28,6 +28,8 @@ OFFICIAL_YT_AUTHORS: Set[str] = {
 TOPIC_QUERIES = [
     '"Bank Indonesia" (inflasi OR "BI-Rate" OR QRIS OR GPIPS) site:youtube.com',
     '"QRIS Run" site:youtube.com',
+    '"QRIS Summer Run" site:youtube.com',
+    'qrissummerrun site:youtube.com',
     '"BI-Rate" Bank Indonesia site:youtube.com',
     'GPIPS OR GPIB "Bank Indonesia" site:youtube.com',
     '"Bank Indonesia Bali" OR "BI Bali" site:youtube.com',
@@ -96,6 +98,8 @@ class YouTubeConnector(BaseConnector):
             "GPIPS",
             "inflasi Bank Indonesia",
             "QRIS Run",
+            "QRIS Summer Run",
+            "qrissummerrun",
             "QRIS Bali",
             "BI-Rate",
         ]

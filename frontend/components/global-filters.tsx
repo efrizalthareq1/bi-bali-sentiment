@@ -71,7 +71,7 @@ export function GlobalFilters({ value, onChange, keywords = [] }: Props) {
           <input
             list="keyword-suggestions"
             type="search"
-            placeholder="Ketik keyword… mis. GPIPS, inflasi, QRIS, Bank Indonesia"
+            placeholder="Ketik keyword… mis. QRIS Summer Run, GPIPS, inflasi"
             className="h-10 rounded-lg border border-border bg-input px-3 text-sm text-foreground"
             value={value.keyword || ""}
             onChange={(e) => set({ keyword: e.target.value })}

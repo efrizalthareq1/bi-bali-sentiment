@@ -96,6 +96,8 @@ class ThreadsConnector(BaseConnector):
             "GPIPS",
             "inflasi",
             "QRIS Run",
+            "QRIS Summer Run",
+            "qrissummerrun",
             "QRIS",
             "BI-Rate",
         ]
@@ -112,6 +114,8 @@ class ThreadsConnector(BaseConnector):
             [
                 '"Bank Indonesia" (inflasi OR QRIS OR GPIPS OR "BI-Rate") site:threads.net',
                 '"QRIS Run" site:threads.net',
+                '"QRIS Summer Run" site:threads.net',
+                'qrissummerrun site:threads.net',
                 '"BI Bali" OR KPwBI site:threads.net',
                 'rupiah ("Bank Indonesia" OR BI) site:threads.net',
             ]
