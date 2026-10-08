@@ -1,6 +1,6 @@
 # fly.toml — alternatif Railway/Render untuk API FastAPI
 # Deploy: cd backend && fly launch --copy-config --yes
-# Lalu: fly secrets set CORS_ORIGINS=https://bi-bali-sentiment.vercel.app
+# Lalu: fly secrets set CORS_ORIGINS=https://bi-aceh-sentiment.vercel.app
 
 app = "bi-aceh-sentiment-api"
 primary_region = "sin"

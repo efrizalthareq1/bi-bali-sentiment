@@ -14,7 +14,7 @@ services:
       - key: PYTHON_VERSION
         value: "3.12.8"
       - key: CORS_ORIGINS
-        value: https://bi-bali-sentiment.vercel.app
+        value: https://bi-aceh-sentiment.vercel.app,https://bi-bali-sentiment.vercel.app
       - key: ENABLE_SCHEDULER
         value: "true"
       - key: LLM_PROVIDER

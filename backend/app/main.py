@@ -40,7 +40,12 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-_cors_origins = settings.cors_origin_list
+# Selalu izinkan frontend Vercel produksi (Aceh + alias lama)
+_known_frontends = [
+    "https://bi-aceh-sentiment.vercel.app",
+    "https://bi-bali-sentiment.vercel.app",
+]
+_cors_origins = list(dict.fromkeys([*_known_frontends, *settings.cors_origin_list]))
 _allow_credentials = "*" not in _cors_origins
 app.add_middleware(
     CORSMiddleware,

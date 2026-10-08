@@ -7,7 +7,7 @@
 | Frontend Next.js | [Vercel](https://vercel.com) | `frontend/` |
 | API FastAPI | [Render](https://render.com) | `backend/` |
 
-Frontend sudah live: https://bi-bali-sentiment.vercel.app
+Frontend sudah live: https://bi-aceh-sentiment.vercel.app
 
 ---
 
@@ -34,7 +34,7 @@ Frontend sudah live: https://bi-bali-sentiment.vercel.app
 
 | Variable | Nilai |
 |----------|--------|
-| `CORS_ORIGINS` | `https://bi-bali-sentiment.vercel.app` |
+| `CORS_ORIGINS` | `https://bi-aceh-sentiment.vercel.app` |
 | `ENABLE_SCHEDULER` | `true` |
 | `LLM_PROVIDER` | `none` |
 | `DATABASE_URL` | `sqlite:///./data/sentiment.db` |
@@ -93,7 +93,7 @@ Atau dari UI Vercel → **Sumber Data** → sinkronkan.
 
 - [ ] Render `/health` OK
 - [ ] Vercel `NEXT_PUBLIC_API_URL` = URL Render
-- [ ] `CORS_ORIGINS` = `https://bi-bali-sentiment.vercel.app`
+- [ ] `CORS_ORIGINS` = `https://bi-aceh-sentiment.vercel.app`
 - [ ] Redeploy Vercel setelah ubah env
 - [ ] Seed / sync data
 
