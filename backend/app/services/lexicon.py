@@ -43,14 +43,15 @@ NEGATIVE_WORDS: Dict[str, float] = {
 }
 
 TOPIC_KEYWORDS: Dict[str, list[str]] = {
-    "inflasi": ["inflasi", "harga", "ihk", "tekanan harga"],
-    "QRIS": ["qris", "qr code", "pembayaran digital", "cashless"],
-    "UMKM": ["umkm", "usaha mikro", "pengusaha kecil", "ekspor umkm"],
+    "inflasi": ["inflasi", "harga", "ihk", "tekanan harga", "tpid"],
+    "QRIS": ["qris", "qr code", "pembayaran digital", "cashless", "bi-fast", "bifast"],
+    "UMKM": ["umkm", "usaha mikro", "pengusaha kecil", "naik kelas", "go digital"],
+    "syariah": ["syariah", "halal", "keuangan syariah", "ekonomi syariah"],
     "penukaran uang": ["penukaran", "tukar uang", "uang rusak", "kupva", "rupiah"],
     "kurs": ["kurs", "nilai tukar", "dollar", "valas"],
-    "pariwisata": ["pariwisata", "wisata", "tourism", "kunjungan"],
-    "program BI": ["serambi", "baligivation", "panca kerti", "investment challenge"],
-    "sistem pembayaran": ["sistem pembayaran", "payment", "transfer", "kliring"],
+    "pariwisata": ["pariwisata", "wisata", "tourism", "meuseuraya"],
+    "program BI": ["meuseuraya", "tp2dd", "etpd", "cbpr", "cinta bangga paham rupiah"],
+    "sistem pembayaran": ["sistem pembayaran", "payment", "transfer", "kliring", "digitalisasi"],
 }
 
 

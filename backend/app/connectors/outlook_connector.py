@@ -40,7 +40,7 @@ class OutlookConnector(BaseConnector):
     name = "Outlook (Microsoft 365)"
     description = (
         "Baca email Inbox via Microsoft Graph (Azure AD app). "
-        "Filter keyword terkait BI Bali / QRIS / dll. "
+        "Filter keyword terkait BI Aceh / QRIS Aceh / dll. "
         "Butuh Tenant ID, Client ID, Client Secret, dan mailbox."
     )
     requires_api_key = True
@@ -113,11 +113,11 @@ class OutlookConnector(BaseConnector):
         ][:10]
         if not text_keywords:
             text_keywords = [
-                "Bank Indonesia Bali",
-                "BI Bali",
-                "KPwBI",
-                "QRIS",
-                "inflasi Bali",
+                "Bank Indonesia Aceh",
+                "BI Aceh",
+                "KPwBI Aceh",
+                "QRIS Aceh",
+                "inflasi Aceh",
             ]
 
         lookback = max(1, settings.outlook_lookback_days)

@@ -35,8 +35,8 @@ class Settings(BaseSettings):
     instagram_business_account_id: str = ""
     # Graph API rate-limits unique hashtag lookups (~30 / 7 days)
     instagram_hashtag_sync_limit: int = 15
-    # Optional: monitor comments on an event account (default QRIS Summer Run)
-    instagram_monitor_username: str = "qrissummerrun"
+    # Optional: monitor comments on a public IG account
+    instagram_monitor_username: str = ""
     # Opsi B: cookie sessionid (+ csrftoken) dari browser saat login IG
     instagram_session_id: str = ""
     instagram_csrf_token: str = ""

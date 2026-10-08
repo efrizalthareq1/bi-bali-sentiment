@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 CLASSIFIER_PROMPT = (
     "Kamu adalah classifier sentimen Bahasa Indonesia. Analisis teks media sosial "
-    "berikut terkait Bank Indonesia Provinsi Bali. Balas HANYA dalam format JSON:\n"
+    "berikut terkait Bank Indonesia Provinsi Aceh. Balas HANYA dalam format JSON:\n"
     '{{"sentiment": "positif|negatif|netral", "confidence": 0.0-1.0, '
     '"topic_tag": "...", "reasoning": "1 kalimat singkat"}}\n'
     'Teks: "{text}"'

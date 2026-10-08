@@ -91,17 +91,15 @@ class ThreadsConnector(BaseConnector):
 
     def _fetch_via_google_news(self, keywords: List[str], limit: int) -> List[RawPost]:
         keys = [k for k in keywords if k and not str(k).startswith("#")][:8] or [
-            "Bank Indonesia",
-            "BI Bali",
-            "GPIPS",
-            "inflasi",
-            "QRIS Run",
-            "QRIS Summer Run",
-            "qrissummerrun",
-            "QRIS",
-            "BI-Rate",
+            "Bank Indonesia Aceh",
+            "BI Aceh",
+            "QRIS Aceh",
+            "inflasi Aceh",
+            "UMKM Aceh",
+            "KPwBI Aceh",
+            "Banda Aceh",
         ]
-        for extra in ("GPIPS", "inflasi Bank Indonesia", "QRIS", "QRIS Run", "BI-Rate"):
+        for extra in ("Bank Indonesia Aceh", "QRIS Aceh", "inflasi Aceh", "Meuseuraya"):
             if extra not in keys:
                 keys.append(extra)
 
@@ -112,12 +110,10 @@ class ThreadsConnector(BaseConnector):
         queries = [f'"{kw}" site:threads.net' for kw in keys[:6]]
         queries.extend(
             [
-                '"Bank Indonesia" (inflasi OR QRIS OR GPIPS OR "BI-Rate") site:threads.net',
-                '"QRIS Run" site:threads.net',
-                '"QRIS Summer Run" site:threads.net',
-                'qrissummerrun site:threads.net',
-                '"BI Bali" OR KPwBI site:threads.net',
-                'rupiah ("Bank Indonesia" OR BI) site:threads.net',
+                '"Bank Indonesia Aceh" OR "BI Aceh" site:threads.net',
+                '"QRIS Aceh" OR InflasiAceh site:threads.net',
+                "UMKMAceh OR Meuseuraya site:threads.net",
+                '"Banda Aceh" (Bank Indonesia OR BI OR QRIS) site:threads.net',
             ]
         )
 

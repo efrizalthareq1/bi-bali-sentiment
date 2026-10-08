@@ -20,68 +20,87 @@ from app.services.lexicon import analyze_with_lexicon
 SOURCES = ["x", "instagram", "tiktok", "news", "manual"]
 
 TEMPLATES_POSITIF = [
-    "Program {keyword} benar-benar membantu UMKM lokal di Bali. Apresiasi untuk KPwBI Bali!",
+    "Program {keyword} benar-benar membantu UMKM lokal di Aceh. Apresiasi untuk KPwBI Aceh!",
     "Penukaran uang di {keyword} lancar sekali, petugasnya ramah dan profesional.",
-    "QRIS Bali memudahkan transaksi di pasar tradisional. Inovasi BI Bali patut diacungi jempol.",
-    "Inflasi Bali terkendali berkat koordinasi {keyword} dengan Pemda. Kerja bagus!",
-    "SERAMBI Bank Indonesia memberi edukasi keuangan yang bermanfaat bagi masyarakat Bali.",
-    "Baligivation sukses dorong investasi berkelanjutan. Semangat {keyword}!",
-    "Sistem pembayaran Bali semakin modern. Terima kasih Bank Indonesia Bali.",
-    "Panca Kerti Bali jadi inspirasi kolaborasi ekonomi lokal yang efektif.",
-    "UMKM ekspor Bali terbantu akses pembiayaan dari program BI. Luar biasa!",
-    "Kurs Bali relatif stabil, kepercayaan pasar terhadap kebijakan {keyword} meningkat.",
+    "QRIS Aceh memudahkan transaksi di pasar tradisional. Inovasi BI Aceh patut diacungi jempol.",
+    "Inflasi Aceh terkendali berkat koordinasi {keyword} dengan Pemda. Kerja bagus!",
+    "Ekonomi syariah Aceh semakin maju. Semangat {keyword}!",
+    "Sistem pembayaran di Banda Aceh semakin modern. Terima kasih Bank Indonesia Aceh.",
+    "UMKM Aceh naik kelas berkat dukungan digitalisasi. Luar biasa!",
+    "Program Meuseuraya memberi dampak positif bagi pelaku usaha lokal.",
+    "Keuangan syariah Aceh terbantu akses literasi dari BI. Mantap!",
+    "Digitalisasi Aceh berjalan baik, kepercayaan pasar terhadap {keyword} meningkat.",
 ]
 
 TEMPLATES_NEGATIF = [
-    "Antrian penukaran uang Bali terlalu lama, pelayanan {keyword} perlu diperbaiki.",
-    "Sosialisasi QRIS Bali masih kurang merata di desa. Banyak pedagang masih bingung.",
-    "Inflasi Bali terasa memberatkan harga kebutuhan pokok. Harap {keyword} lebih responsif.",
-    "Informasi KUPVA Bali tidak jelas di situs resmi. Frustrasi mencari lokasi tukar valas.",
+    "Antrian penukaran uang di Banda Aceh terlalu lama, pelayanan {keyword} perlu diperbaiki.",
+    "Sosialisasi QRIS Aceh masih kurang merata di desa. Banyak pedagang masih bingung.",
+    "Inflasi Aceh terasa memberatkan harga kebutuhan pokok. Harap {keyword} lebih responsif.",
+    "Informasi TPID Aceh tidak jelas di situs resmi. Frustrasi mencari update terbaru.",
     "Program {keyword} terkesan elitis, UMKM kecil belum merasakan manfaatnya.",
-    "Kendala teknis sistem pembayaran Bali mengganggu transaksi harian.",
-    "Ekonomi Bali pariwisata lesu, stimulus dari BI dinilai belum cukup.",
+    "Kendala teknis sistem pembayaran mengganggu transaksi harian di Aceh.",
+    "Ekonomi Aceh masih lesu, stimulus dari BI dinilai belum cukup.",
     "Komplain soal uang rusak ditolak di beberapa titik penukaran. Kecewa dengan layanan.",
     "Banyak pelaku usaha mengeluhkan proses {keyword} yang ribet dan lambat.",
-    "Transparansi data inflasi Bali kurang, publik kesulitan memahami kebijakan.",
+    "Transparansi data inflasi Aceh kurang, publik kesulitan memahami kebijakan.",
 ]
 
 TEMPLATES_NETRAL = [
-    "Bank Indonesia Bali mengumumkan jadwal penukaran uang menjelang Hari Raya.",
-    "KPwBI Bali menggelar sosialisasi {keyword} di Denpasar minggu ini.",
-    "Achris Sarwani menyampaikan update kondisi ekonomi Bali pada konferensi pers.",
-    "Erwin Soeriadimadja hadir dalam forum diskusi sistem pembayaran Bali.",
-    "Data inflasi Bali bulan ini akan dirilis sesuai kalender resmi BI.",
-    "QRIS Bali terus diperluas ke merchant baru menurut laporan {keyword}.",
-    "Bali Investment Challenge membuka pendaftaran peserta periode berikutnya.",
-    "Monitoring kurs Bali dilakukan secara berkala oleh Kantor Perwakilan BI.",
-    "UMKM ekspor Bali mengikuti workshop dari SERAMBI Bank Indonesia.",
-    "Laporan ekonomi Bali pariwisata dibahas dalam rapat koordinasi {keyword}.",
+    "Bank Indonesia Aceh mengumumkan jadwal penukaran uang menjelang Hari Raya.",
+    "KPwBI Aceh menggelar sosialisasi {keyword} di Banda Aceh minggu ini.",
+    "Data inflasi Aceh bulan ini akan dirilis sesuai kalender resmi BI.",
+    "QRIS Aceh terus diperluas ke merchant baru menurut laporan {keyword}.",
+    "Monitoring TP2DD Aceh dilakukan secara berkala oleh Kantor Perwakilan BI.",
+    "UMKM Aceh mengikuti workshop digitalisasi sistem pembayaran.",
+    "Laporan ekonomi Aceh dibahas dalam rapat koordinasi {keyword}.",
+    "Program ETPD Aceh masuk agenda literasi keuangan daerah.",
+    "Diskusi keuangan syariah Aceh digelar bersama komunitas lokal.",
+    "Update CBPR dan Cinta Bangga Paham Rupiah disampaikan ke publik.",
 ]
 
 IG_CAPTION_TEMPLATES = [
     "{body}\n\n{tags}",
     "{body}\n.\n.\n{tags}",
-    "Update dari Bali\n{body}\n\n{tags}",
+    "Update dari Aceh\n{body}\n\n{tags}",
 ]
 
 AUTHORS = [
-    "warga_denpasar", "umkm_ubud", "media_bali_post", "trader_kuta",
-    "mahasiswa_unud", "pedagang_pasar", "tour_guide_bali", "fintech_id",
-    "reporter_bisnis", "komunitas_qris", "investor_bali", "netizen_singaraja",
+    "warga_bandaaceh", "umkm_aceh", "media_aceh", "pedagang_pasar",
+    "mahasiswa_unsyiah", "fintech_id", "reporter_bisnis", "komunitas_qris",
+    "investor_aceh", "netizen_lhokseumawe", "komunitas_halal", "pariwisata_aceh",
 ]
 
 
 def seed_keywords(db: Session) -> int:
+    """Seed Aceh keywords/hashtags and deactivate obsolete Bali-focused entries."""
+    allowed = {k for k, _ in DEFAULT_KEYWORDS} | {h for h, _ in all_formatted_hashtags()}
     created = 0
+
+    for row in db.query(Keyword).all():
+        if row.keyword not in allowed:
+            # Drop legacy Bali / Summer Run focus from active monitoring
+            if (
+                "bali" in row.keyword.lower()
+                or "summer" in row.keyword.lower()
+                or "baligivation" in row.keyword.lower()
+                or "denpasar" in row.keyword.lower()
+                or (row.category.startswith("ig_") and row.keyword not in allowed)
+            ):
+                row.active = False
+
     for keyword, category in DEFAULT_KEYWORDS:
         exists = db.query(Keyword).filter(Keyword.keyword == keyword).first()
         if exists:
+            exists.category = category
+            exists.active = True
             continue
         db.add(Keyword(keyword=keyword, category=category, active=True))
         created += 1
     for hashtag, category in all_formatted_hashtags():
         exists = db.query(Keyword).filter(Keyword.keyword == hashtag).first()
         if exists:
+            exists.category = category
+            exists.active = True
             continue
         db.add(Keyword(keyword=hashtag, category=category, active=True))
         created += 1
@@ -242,7 +261,7 @@ def generate_tiktok_demo(
     count: int = 60,
     analyze: bool = True,
 ) -> tuple[int, int]:
-    """Synthetic TikTok captions for BI Bali topics (no API key)."""
+    """Synthetic TikTok captions for BI Aceh topics (no API key)."""
     seed_keywords(db)
     tags = [format_hashtag(t) for t in INSTAGRAM_PRIORITY_HASHTAGS[:15]]
     created = 0
@@ -264,8 +283,8 @@ def generate_tiktok_demo(
 
         text = (
             f"{body}\n\n"
-            f"{tag} #BIBali #BankIndonesia #QRISBali #EkonomiBali "
-            f"#FYP #Foryou #Bali"
+            f"{tag} #BIAceh #BankIndonesiaAceh #QRISAceh #EkonomiAceh "
+            f"#FYP #Foryou #Aceh #BandaAceh"
         )
         posted_at = now - timedelta(
             days=random.randint(0, 45), hours=random.randint(0, 23)
@@ -303,23 +322,23 @@ def generate_outlook_demo(
     count: int = 40,
     analyze: bool = True,
 ) -> tuple[int, int]:
-    """Synthetic Outlook emails for BI Bali monitoring (no Azure credentials)."""
+    """Synthetic Outlook emails for BI Aceh monitoring (no Azure credentials)."""
     seed_keywords(db)
     subjects = [
-        "Update inflasi Bali — ringkasan koordinasi TPID",
-        "Undangan sosialisasi QRIS Bali untuk UMKM",
-        "Laporan media: sentimen publik terhadap BI Bali",
-        "Newsletter SERAMBI Bank Indonesia edisi terbaru",
-        "Penukaran uang rupiah di Bali — jadwal layanan",
-        "Clipping berita ekonomi Bali pariwisata",
-        "Feedback merchant terkait sistem pembayaran QRIS",
-        "Rekap mention media sosial KPwBI Bali minggu ini",
+        "Update inflasi Aceh — ringkasan koordinasi TPID",
+        "Undangan sosialisasi QRIS Aceh untuk UMKM",
+        "Laporan media: sentimen publik terhadap BI Aceh",
+        "Newsletter Bank Indonesia Aceh edisi terbaru",
+        "Penukaran uang rupiah di Banda Aceh — jadwal layanan",
+        "Clipping berita ekonomi Aceh",
+        "Feedback merchant terkait sistem pembayaran QRIS Aceh",
+        "Rekap mention media sosial KPwBI Aceh minggu ini",
     ]
     senders = [
         "media.monitor@example.com",
-        "umkm.bali@example.com",
+        "umkm.aceh@example.com",
         "newsletter@bankindonesia.go.id",
-        "tpid.bali@example.go.id",
+        "tpid.aceh@example.go.id",
         "clipping@example.com",
     ]
     created = 0

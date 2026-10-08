@@ -217,22 +217,21 @@ class InstagramConnector(BaseConnector):
 
     def _fetch_via_public_index(self, keywords: List[str], limit: int) -> List[RawPost]:
         keys = [k for k in keywords if k and not str(k).startswith("ig_")][:8] or [
-            "Bank Indonesia",
-            "QRIS",
-            "inflasi",
-            "GPIPS",
-            "BI Bali",
-            "QRIS Summer Run",
-            "QRIS Run",
-            "qrissummerrun",
+            "Bank Indonesia Aceh",
+            "BI Aceh",
+            "KPwBI Aceh",
+            "QRIS Aceh",
+            "inflasi Aceh",
+            "UMKM Aceh",
+            "Banda Aceh",
         ]
         queries = [f'"{kw}" site:instagram.com' for kw in keys[:6]]
         queries.extend(
             [
-                '"Bank Indonesia" (QRIS OR inflasi OR GPIPS) site:instagram.com',
-                '"QRIS Summer Run" OR "QRIS Run" site:instagram.com',
-                "qrissummerrun site:instagram.com",
-                '"BI Bali" OR KPwBI site:instagram.com',
+                '"Bank Indonesia Aceh" OR "BI Aceh" OR KPwBIAceh site:instagram.com',
+                '"QRIS Aceh" OR QRISAceh site:instagram.com',
+                '"inflasi Aceh" OR TPIDAceh site:instagram.com',
+                "Meuseuraya OR UMKMAceh site:instagram.com",
             ]
         )
 

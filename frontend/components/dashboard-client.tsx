@@ -23,12 +23,12 @@ import {
 } from "@/lib/api";
 import { buildSnaFromPosts } from "@/lib/sna";
 
-const QRIS_SUMMER_Q =
-  "QRIS Summer Run OR QRIS Summer OR qrissummerrun OR QRIS Run OR @qrissummerrun";
+const ACEH_DEFAULT_Q =
+  "Bank Indonesia Aceh OR BI Aceh OR KPwBI Aceh OR QRIS Aceh OR #BIAceh OR #BankIndonesiaAceh";
 
 export function DashboardClient() {
   const [filters, setFilters] = useState<Filters>({
-    q: QRIS_SUMMER_Q,
+    q: ACEH_DEFAULT_Q,
   });
   const [overview, setOverview] = useState<DashboardOverview | null>(null);
   const [sna, setSna] = useState<SNAGraph | null>(null);
@@ -62,9 +62,9 @@ export function DashboardClient() {
     return next;
   }, [filterKey]);
 
-  const isQrisFocus = useMemo(() => {
+  const isAcehFocus = useMemo(() => {
     const blob = `${filters.keyword || ""} ${filters.q || ""}`.toLowerCase();
-    return /qris summer|qris run|qrissummerrun/.test(blob);
+    return /bank indonesia aceh|bi aceh|kpwbi|qris aceh|#biaceh/.test(blob);
   }, [filters.keyword, filters.q]);
 
   const load = useCallback(
@@ -156,14 +156,14 @@ export function DashboardClient() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wider text-primary">
-            KPwBI Bali
+            KPwBI Aceh
           </p>
           <h1 className="font-display mt-1 text-3xl font-semibold tracking-tight text-foreground">
             Dashboard Sentimen
           </h1>
           <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-            Monitoring percakapan publik — default fokus ke{" "}
-            <span className="font-medium text-foreground">QRIS Summer Run</span>.
+            Monitoring percakapan publik terkait{" "}
+            <span className="font-medium text-foreground">Bank Indonesia Aceh</span>.
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -183,7 +183,7 @@ export function DashboardClient() {
       )}
 
       <TopicFocusBar
-        activeKeyword={isQrisFocus ? "QRIS Summer Run" : filters.keyword}
+        activeKeyword={isAcehFocus && !filters.keyword ? "BI Aceh" : filters.keyword}
         onSelect={(topic) => {
           if (!topic) {
             setFilters({
@@ -191,14 +191,7 @@ export function DashboardClient() {
               sentiment: filters.sentiment,
               date_from: filters.date_from,
               date_to: filters.date_to,
-            });
-            return;
-          }
-          if (topic.keyword === "QRIS Summer Run") {
-            setFilters({
-              ...filters,
-              keyword: "",
-              q: QRIS_SUMMER_Q,
+              q: ACEH_DEFAULT_Q,
             });
             return;
           }
@@ -228,16 +221,16 @@ export function DashboardClient() {
         </div>
       ) : overview ? (
         <>
-          {isQrisFocus && (
+          {isAcehFocus && (
             <div className="rounded-xl border border-border bg-card px-4 py-3 shadow-sm">
               <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <p className="text-sm font-semibold text-foreground">
-                    Fokus: QRIS Summer Run / @qrissummerrun
+                    Fokus: Bank Indonesia Aceh / KPwBI Aceh
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    Mencakup berita & postingan yang memuat QRIS Summer Run, QRIS Run, atau
-                    qrissummerrun.
+                    Mencakup berita & postingan terkait BI Aceh, QRIS Aceh, inflasi Aceh,
+                    UMKM Aceh, dan hashtag #BIAceh.
                   </p>
                 </div>
                 <p className="text-sm text-muted-foreground">

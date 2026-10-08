@@ -1,6 +1,6 @@
-# Sentimen KPwBI Bali
+# Sentimen KPwBI Aceh
 
-Platform analisis sentimen publik untuk memantau percakapan di media sosial dan berita online terkait **Bank Indonesia Kantor Perwakilan Provinsi Bali (KPwBI Bali)**.
+Platform analisis sentimen publik untuk memantau percakapan di media sosial dan berita online terkait **Bank Indonesia Kantor Perwakilan Provinsi Aceh (KPwBI Aceh)**.
 
 ## Stack
 
@@ -105,10 +105,13 @@ Jika `LLM_PROVIDER=none` atau API key kosong, sistem memakai leksikon InSet.
 
 ## Keyword Awal
 
-Bank Indonesia Bali, BI Bali, KPwBI Bali, Achris Sarwani, Erwin Soeriadimadja,
-rupiah Bali, penukaran uang Bali, QRIS Bali, inflasi Bali, SERAMBI Bank Indonesia,
-Baligivation, Bali Investment Challenge, Panca Kerti Bali, UMKM ekspor Bali,
-sistem pembayaran Bali, kurs Bali, KUPVA Bali, ekonomi Bali pariwisata, dll.
+Bank Indonesia Aceh, BI Aceh, BI Banda Aceh, KPwBI Aceh, Aceh, Banda Aceh,
+QRIS Aceh, QRIS Banda Aceh, inflasi Aceh, TPID Aceh, ekonomi Aceh, UMKM Aceh,
+ekonomi syariah Aceh, keuangan syariah Aceh, halal Aceh, digitalisasi Aceh,
+sistem pembayaran, BI-FAST, CBPR, Meuseuraya, TP2DD Aceh, ETPD Aceh, dll.
+
+Hashtag prioritas: `#BankIndonesiaAceh` `#BIAceh` `#BIBandaAceh` `#KPwBIAceh`
+`#QRISAceh` `#InflasiAceh` `#TPIDAceh` `#EkonomiAceh` `#UMKMAceh` `#Meuseuraya` ...
 
 ## Deployment
 
@@ -119,7 +122,7 @@ Alternatif Docker / VPS: [DEPLOY.md](./DEPLOY.md)
 
 ## Instagram Hashtag Search
 
-Katalog ~98 hashtag (branding BI, ekonomi Bali, QRIS, UMKM, komunitas, edukasi) tersimpan di tabel `keywords` (kategori `ig_*`).
+Katalog hashtag Aceh (branding BI, ekonomi, QRIS, UMKM, syariah, program) tersimpan di tabel `keywords` (kategori `ig_*`).
 
 1. Buka **Sumber Data** → seed katalog / lihat daftar hashtag
 2. **Demo** (tanpa API): `POST /ingest/instagram-demo` — post sintetis per hashtag prioritas
@@ -131,7 +134,7 @@ Katalog ~98 hashtag (branding BI, ekonomi Bali, QRIS, UMKM, komunitas, edukasi) 
    ```
    lalu `POST /sources/instagram/sync`
 
-Catatan: Graph API membatasi ~30 unique hashtag lookup per 7 hari; sync memakai daftar prioritas (`#BIBali`, `#QRISBali`, `#InflasiBali`, dll.).
+Catatan: Graph API membatasi ~30 unique hashtag lookup per 7 hari; sync memakai daftar prioritas (`#BIAceh`, `#QRISAceh`, `#InflasiAceh`, dll.).
 
 ## TikTok Research API
 
@@ -145,7 +148,7 @@ Catatan: Graph API membatasi ~30 unique hashtag lookup per 7 hari; sync memakai 
 3. Sync dari **Sumber Data** atau `POST /sources/tiktok/sync`
 4. Caption masuk tabel `posts` (source=`tiktok`), lalu dianalisis oleh pipeline sentimen platform (LLM/InSet) — bukan skrip VADER terpisah.
 
-Query default: keyword BI Bali / QRIS Bali + hashtag `bibali`, `qrisbali`, dll., region `ID`.
+Query default: keyword BI Aceh / QRIS Aceh + hashtag `biaceh`, `qrisaceh`, dll., region `ID`.
 
 ## Outlook (Microsoft Graph)
 
@@ -164,4 +167,4 @@ Query default: keyword BI Bali / QRIS Bali + hashtag `bibali`, `qrisbali`, dll.,
 5. Sync dari **Sumber Data** → **Sync Outlook (Graph API)** atau `POST /sources/outlook/sync`.
 6. Tanpa Azure: tombol **Demo Email Outlook** / `POST /ingest/outlook-demo`.
 
-Email yang cocok keyword (BI Bali, QRIS, dll.) masuk `posts` dengan `source=outlook`, lalu dianalisis seperti sumber lain.
+Email yang cocok keyword (BI Aceh, QRIS Aceh, dll.) masuk `posts` dengan `source=outlook`, lalu dianalisis seperti sumber lain.

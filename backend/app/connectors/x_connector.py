@@ -45,16 +45,14 @@ RSSHUB_BASES = [
 
 # Topik isu terkini yang sering dibahas publik soal BI
 NETIZEN_TOPIC_QUERIES = [
-    '"Bank Indonesia" (inflasi OR "BI-Rate" OR QRIS OR GPIPS OR "suku bunga") (site:x.com OR site:twitter.com)',
-    '"BI-Rate" (naik OR turun OR tetap) (site:x.com OR site:twitter.com)',
-    '"QRIS" (Bank Indonesia OR BI) (site:x.com OR site:twitter.com)',
-    '"QRIS Run" (site:x.com OR site:twitter.com)',
-    '"QRIS Summer Run" (site:x.com OR site:twitter.com)',
-    'qrissummerrun (site:x.com OR site:twitter.com)',
-    '"GPIPS" OR "GPIB" (Bank Indonesia OR BI) (site:x.com OR site:twitter.com)',
-    '"Bank Indonesia Bali" OR "BI Bali" OR KPwBI (site:x.com OR site:twitter.com)',
-    'rupiah (menguat OR melemah OR "Bank Indonesia") (site:x.com OR site:twitter.com)',
-    'inflasi Bali OR "inflasi Indonesia" BI (site:x.com OR site:twitter.com)',
+    '"Bank Indonesia Aceh" OR "BI Aceh" OR KPwBIAceh OR "KPwBI Aceh" (site:x.com OR site:twitter.com)',
+    '"QRIS Aceh" OR QRISAceh OR "QRIS Banda Aceh" (site:x.com OR site:twitter.com)',
+    '"inflasi Aceh" OR InflasiAceh OR "TPID Aceh" (site:x.com OR site:twitter.com)',
+    '"ekonomi Aceh" OR UMKMAceh OR "UMKM Aceh" (site:x.com OR site:twitter.com)',
+    '"Bank Indonesia" Aceh (QRIS OR inflasi OR UMKM OR syariah) (site:x.com OR site:twitter.com)',
+    'Meuseuraya OR TP2DDAceh OR ETPDAceh (site:x.com OR site:twitter.com)',
+    '"Banda Aceh" (Bank Indonesia OR BI OR QRIS) (site:x.com OR site:twitter.com)',
+    'rupiah (menguat OR melemah OR "Bank Indonesia") Aceh (site:x.com OR site:twitter.com)',
 ]
 
 
@@ -80,7 +78,7 @@ class XConnector(BaseConnector):
             "Mode API: recent search netizen (mengecualikan from:bank_indonesia)."
             if configured_api
             else (
-                "Mode publik: mention netizen site:x.com tentang BI / inflasi / QRIS / GPIPS. "
+                "Mode publik: mention netizen site:x.com tentang BI Aceh / QRIS Aceh / inflasi Aceh. "
                 "Bukan timeline akun resmi BI."
             )
         )
@@ -155,14 +153,14 @@ class XConnector(BaseConnector):
             else:
                 phrases.append(f'"{kw}"')
         if not phrases:
-            phrases = ['"Bank Indonesia"', '"BI-Rate"', "QRIS", "GPIPS", "inflasi"]
+            phrases = ['"Bank Indonesia Aceh"', '"BI Aceh"', '"QRIS Aceh"', "inflasi Aceh"]
 
         # Netizen only: exclude official BI accounts
         query = (
             "("
             + " OR ".join(phrases[:6])
-            + ') ("Bank Indonesia" OR BI-Rate OR QRIS OR GPIPS OR inflasi) '
-            "lang:id -is:retweet -from:bank_indonesia -from:BI_ProvinsiBali"
+            + ') ("Bank Indonesia Aceh" OR "BI Aceh" OR Aceh OR QRIS OR inflasi) '
+            "lang:id -is:retweet -from:bank_indonesia"
         )
         headers = {"Authorization": f"Bearer {settings.x_bearer_token}"}
         params = {
@@ -218,14 +216,21 @@ class XConnector(BaseConnector):
     def _fetch_via_rsshub_search(self, keywords: List[str], limit: int) -> List[RawPost]:
         """Cari tweet publik via RSSHub search (bukan timeline akun resmi)."""
         keys = [k for k in keywords if k and not k.startswith("#")][:5] or [
-            "Bank Indonesia",
-            "BI-Rate",
-            "QRIS",
-            "GPIPS",
-            "inflasi BI",
+            "Bank Indonesia Aceh",
+            "BI Aceh",
+            "QRIS Aceh",
+            "inflasi Aceh",
+            "UMKM Aceh",
         ]
         search_terms = list(keys)
-        for extra in ("Bank Indonesia inflasi", "QRIS Summer Run", "QRIS Run", "qrissummerrun", "BI Bali", "GPIPS"):
+        for extra in (
+            "Bank Indonesia Aceh",
+            "BI Aceh",
+            "KPwBI Aceh",
+            "QRIS Aceh",
+            "inflasi Aceh",
+            "Banda Aceh BI",
+        ):
             if extra not in search_terms:
                 search_terms.append(extra)
         search_terms = search_terms[:8]
@@ -319,13 +324,13 @@ class XConnector(BaseConnector):
         text_keywords = [
             k for k in keywords if k and not k.startswith("#") and not k.startswith("ig_")
         ][:8] or [
-            "Bank Indonesia",
-            "BI Bali",
-            "GPIPS",
-            "inflasi",
-            "QRIS Run",
-            "QRIS",
-            "BI-Rate",
+            "Bank Indonesia Aceh",
+            "BI Aceh",
+            "KPwBI Aceh",
+            "QRIS Aceh",
+            "inflasi Aceh",
+            "UMKM Aceh",
+            "Banda Aceh",
         ]
 
         queries = list(NETIZEN_TOPIC_QUERIES)
@@ -378,7 +383,7 @@ class XConnector(BaseConnector):
                     continue
                 # Skip judul yang jelas dari akun resmi BI / kampanye resmi
                 if re.search(
-                    r"@bank_indonesia\b|@BI_ProvinsiBali\b|#SobatRupiah|Bank Indonesia Channel",
+                    r"@bank_indonesia\b|#SobatRupiah|Bank Indonesia Channel",
                     title,
                     re.I,
                 ):

@@ -9,30 +9,30 @@ type FocusTopic = {
 
 const TOPICS: FocusTopic[] = [
   {
-    id: "qris-summer",
-    label: "QRIS Summer Run",
-    keyword: "QRIS Summer Run",
-    q: "QRIS Summer Run OR QRIS Summer OR qrissummerrun OR QRIS Run OR @qrissummerrun",
+    id: "bi-aceh",
+    label: "BI Aceh",
+    keyword: "BI Aceh",
+    q: "BI Aceh OR Bank Indonesia Aceh OR KPwBI Aceh OR #BIAceh",
   },
   {
-    id: "qris",
-    label: "QRIS",
-    keyword: "QRIS",
+    id: "qris-aceh",
+    label: "QRIS Aceh",
+    keyword: "QRIS Aceh",
   },
   {
-    id: "inflasi",
-    label: "Inflasi",
-    keyword: "inflasi",
+    id: "inflasi-aceh",
+    label: "Inflasi Aceh",
+    keyword: "inflasi Aceh",
   },
   {
-    id: "gpips",
-    label: "GPIPS",
-    keyword: "GPIPS",
+    id: "umkm-aceh",
+    label: "UMKM Aceh",
+    keyword: "UMKM Aceh",
   },
   {
-    id: "bi-bali",
-    label: "BI Bali",
-    keyword: "BI Bali",
+    id: "syariah",
+    label: "Ekonomi Syariah",
+    keyword: "ekonomi syariah Aceh",
   },
 ];
 
@@ -57,13 +57,7 @@ export function TopicFocusBar({ activeKeyword, onSelect }: Props) {
         Semua
       </button>
       {TOPICS.map((topic) => {
-        const active =
-          activeKeyword?.toLowerCase() === topic.keyword.toLowerCase() ||
-          (topic.id === "qris-summer" &&
-            Boolean(
-              activeKeyword &&
-                /qris summer|qris run|qrissummerrun/i.test(activeKeyword)
-            ));
+        const active = activeKeyword?.toLowerCase() === topic.keyword.toLowerCase();
         return (
           <button
             key={topic.id}

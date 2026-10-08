@@ -22,20 +22,21 @@ VIDEO_FIELDS = (
 
 # Default search terms when DB keywords are empty / for Research API query shaping
 DEFAULT_TIKTOK_KEYWORDS = [
-    "Bank Indonesia Bali",
-    "BI Bali",
-    "KPwBI Bali",
-    "QRIS Bali",
-    "inflasi Bali",
+    "Bank Indonesia Aceh",
+    "BI Aceh",
+    "KPwBI Aceh",
+    "QRIS Aceh",
+    "inflasi Aceh",
 ]
 DEFAULT_TIKTOK_HASHTAGS = [
-    "bibali",
-    "qrisbali",
-    "bankindonesia",
-    "bankindonesiabali",
-    "inflasibali",
-    "ekonomibali",
-    "umkmbali",
+    "biaceh",
+    "bankindonesiaaceh",
+    "kpwbiaceh",
+    "qrisaceh",
+    "inflasiaceh",
+    "ekonomiaceh",
+    "umkmaceh",
+    "bandaaceh",
 ]
 
 

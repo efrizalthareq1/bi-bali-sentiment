@@ -132,12 +132,12 @@ def purge_demo_posts(db: Session, sources: Optional[List[str]] = None) -> int:
             Post.url.ilike("%outlook.office.com%/demo/%"),
             # Official account timeline stubs / posts (we want netizen discussion)
             Post.author.ilike("bank_indonesia"),
-            Post.author.ilike("BI_ProvinsiBali"),
+            Post.author.ilike("BI_ProvinsiAceh"),
             Post.author.ilike("bankindonesia"),
             Post.author.ilike("Bank Indonesia Channel"),
             Post.keyword_matched.ilike("@bank_indonesia"),
             Post.keyword_matched.ilike("@bankindonesia"),
-            Post.keyword_matched.ilike("@BI_ProvinsiBali"),
+            Post.keyword_matched.ilike("@BI_ProvinsiAceh"),
         )
     )
     if sources:
@@ -186,21 +186,23 @@ def sync_connector(db: Session, connector_id: str, limit: int = 50) -> tuple[int
             db, limit=get_settings().instagram_hashtag_sync_limit
         )
         keywords = text_kw[:10] + ig_tags[:8]
-        if "QRIS Summer Run" not in keywords:
-            keywords = ["QRIS Summer Run", *keywords]
-        if "QRIS Run" not in keywords:
-            keywords = ["QRIS Run", *keywords]
-        if "qrissummerrun" not in keywords:
-            keywords = ["qrissummerrun", *keywords]
+        for extra in ("Bank Indonesia Aceh", "BI Aceh", "QRIS Aceh", "KPwBI Aceh"):
+            if extra not in keywords:
+                keywords = [extra, *keywords]
     elif connector_id == "tiktok":
         text_kw = sorted(get_active_keywords(db), key=_news_keyword_priority)[:8]
         ig_tags = get_active_instagram_hashtags(db, limit=8)
         keywords = text_kw + ig_tags
     else:
         keywords = sorted(get_active_keywords(db), key=_news_keyword_priority)
-        # Ensure QRIS Summer Run topics are always searched on social/news connectors
-        if connector_id in {"news", "x", "youtube", "threads"}:
-            for extra in ("QRIS Summer Run", "QRIS Run", "qrissummerrun"):
+        if connector_id in {"news", "x", "youtube", "threads", "outlook"}:
+            for extra in (
+                "Bank Indonesia Aceh",
+                "BI Aceh",
+                "KPwBI Aceh",
+                "QRIS Aceh",
+                "inflasi Aceh",
+            ):
                 if extra not in keywords:
                     keywords = [extra, *keywords]
 

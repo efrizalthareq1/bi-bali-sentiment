@@ -22,7 +22,7 @@ export function AppNav() {
           </div>
           <div className="leading-tight">
             <p className="font-display text-base font-semibold text-foreground group-hover:text-primary">
-              Sentimen KPwBI Bali
+              Sentimen KPwBI Aceh
             </p>
             <p className="hidden text-xs text-muted-foreground sm:block">
               Monitoring percakapan publik

@@ -9,15 +9,15 @@ export default function HomePage() {
         <div className="pointer-events-none absolute -right-16 top-0 h-64 w-64 rounded-full bg-teal-400/15 blur-3xl" />
         <div className="pointer-events-none absolute bottom-0 left-10 h-48 w-48 rounded-full bg-white/5 blur-3xl" />
         <p className="text-sm font-medium uppercase tracking-[0.2em] text-teal-300/90">
-          Bank Indonesia · KPwBI Bali
+          Bank Indonesia · KPwBI Aceh
         </p>
         <h1 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-          Sentimen KPwBI Bali
+          Sentimen KPwBI Aceh
         </h1>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-zinc-300 sm:text-lg">
           Pantau dan analisis percakapan publik seputar kebijakan, program, dan pemberitaan
-          Bank Indonesia Provinsi Bali — dari inflasi, UMKM, QRIS, hingga penukaran uang
-          rupiah.
+          Bank Indonesia Provinsi Aceh — dari inflasi, UMKM, QRIS, ekonomi syariah, hingga
+          digitalisasi daerah.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link href="/dashboard">

@@ -26,14 +26,12 @@ OFFICIAL_YT_AUTHORS: Set[str] = {
 }
 
 TOPIC_QUERIES = [
-    '"Bank Indonesia" (inflasi OR "BI-Rate" OR QRIS OR GPIPS) site:youtube.com',
-    '"QRIS Run" site:youtube.com',
-    '"QRIS Summer Run" site:youtube.com',
-    'qrissummerrun site:youtube.com',
-    '"BI-Rate" Bank Indonesia site:youtube.com',
-    'GPIPS OR GPIB "Bank Indonesia" site:youtube.com',
-    '"Bank Indonesia Bali" OR "BI Bali" site:youtube.com',
-    'inflasi Indonesia "Bank Indonesia" site:youtube.com',
+    '"Bank Indonesia Aceh" OR "BI Aceh" OR KPwBIAceh site:youtube.com',
+    '"QRIS Aceh" OR QRISAceh site:youtube.com',
+    '"inflasi Aceh" OR "TPID Aceh" site:youtube.com',
+    '"UMKM Aceh" OR UMKMAceh site:youtube.com',
+    '"Bank Indonesia" Aceh (QRIS OR inflasi OR UMKM) site:youtube.com',
+    'Meuseuraya OR "Banda Aceh" "Bank Indonesia" site:youtube.com',
 ]
 
 
@@ -93,22 +91,20 @@ class YouTubeConnector(BaseConnector):
 
     def _fetch_google_youtube_search(self, keywords: List[str], limit: int) -> List[RawPost]:
         keys = [k for k in keywords if k and not k.startswith("#")][:8] or [
-            "Bank Indonesia",
-            "Bank Indonesia Bali",
-            "GPIPS",
-            "inflasi Bank Indonesia",
-            "QRIS Run",
-            "QRIS Summer Run",
-            "qrissummerrun",
-            "QRIS Bali",
-            "BI-Rate",
+            "Bank Indonesia Aceh",
+            "BI Aceh",
+            "QRIS Aceh",
+            "inflasi Aceh",
+            "UMKM Aceh",
+            "KPwBI Aceh",
+            "Banda Aceh",
         ]
         for extra in (
-            "GPIPS Bank Indonesia",
-            "inflasi Indonesia BI",
-            "QRIS Bank Indonesia",
-            "QRIS Run",
-            "BI-Rate Bank Indonesia",
+            "Bank Indonesia Aceh",
+            "QRIS Aceh",
+            "inflasi Aceh",
+            "UMKM Aceh",
+            "Meuseuraya",
         ):
             if extra not in keys:
                 keys.append(extra)

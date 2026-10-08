@@ -26,7 +26,7 @@ async def lifespan(app: FastAPI):
     finally:
         db.close()
     start_scheduler()
-    logger.info("BI Bali Sentiment API ready")
+    logger.info("BI Aceh Sentiment API ready")
     yield
     stop_scheduler()
 
@@ -34,8 +34,8 @@ async def lifespan(app: FastAPI):
 settings = get_settings()
 
 app = FastAPI(
-    title="BI Bali Sentiment Analysis API",
-    description="Platform analisis sentimen publik untuk KPwBI Bali",
+    title="BI Aceh Sentiment Analysis API",
+    description="Platform analisis sentimen publik untuk KPwBI Aceh",
     version="1.0.0",
     lifespan=lifespan,
 )
@@ -59,4 +59,4 @@ app.include_router(sources.router)
 
 @app.get("/health")
 def health():
-    return {"status": "ok", "service": "bi-bali-sentiment"}
+    return {"status": "ok", "service": "bi-aceh-sentiment"}

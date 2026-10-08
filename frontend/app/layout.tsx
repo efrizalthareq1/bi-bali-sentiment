@@ -14,9 +14,9 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "Sentimen KPwBI Bali",
+  title: "Sentimen KPwBI Aceh",
   description:
-    "Dashboard analisis sentimen publik terhadap Bank Indonesia Kantor Perwakilan Provinsi Bali",
+    "Dashboard analisis sentimen publik terhadap Bank Indonesia Kantor Perwakilan Provinsi Aceh",
 };
 
 export default function RootLayout({

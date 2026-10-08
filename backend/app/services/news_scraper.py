@@ -139,20 +139,26 @@ def get_active_instagram_hashtags(db: Session, limit: Optional[int] = None) -> L
 
 
 def _news_keyword_priority(keyword: str) -> int:
-    """Prefer core BI / Bali / policy terms during capped syncs."""
+    """Prefer core BI / Aceh / policy terms during capped syncs."""
     preferred = [
-        "bank indonesia bali",
+        "bank indonesia aceh",
         "bank indonesia",
-        "bi bali",
-        "kpwbi bali",
-        "qris run",
-        "gpips",
-        "inflasi",
+        "bi aceh",
+        "bi banda aceh",
+        "kpwbi aceh",
+        "qris aceh",
+        "inflasi aceh",
+        "tpid aceh",
+        "ekonomi aceh",
+        "umkm aceh",
+        "meuseuraya",
         "qris",
+        "inflasi",
         "bi-rate",
         "suku bunga",
         "umkm",
         "rupiah",
+        "aceh",
     ]
     lowered = keyword.lower()
     for i, needle in enumerate(preferred):
