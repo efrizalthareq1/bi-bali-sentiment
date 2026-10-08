@@ -273,6 +273,11 @@ export const api = {
       `/ingest/tiktok-demo?count=${count}`,
       { method: "POST" }
     ),
+  outlookDemo: (count = 40) =>
+    request<{ posts_created: number; analyzed: number; message: string }>(
+      `/ingest/outlook-demo?count=${count}`,
+      { method: "POST" }
+    ),
   syncNews: () =>
     request<{ inserted: number; skipped: number; message: string }>("/ingest/news", {
       method: "POST",

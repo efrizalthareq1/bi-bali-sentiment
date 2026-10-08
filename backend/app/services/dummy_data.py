@@ -296,3 +296,78 @@ def generate_tiktok_demo(
             analyzed += 1
 
     return created, analyzed
+
+
+def generate_outlook_demo(
+    db: Session,
+    count: int = 40,
+    analyze: bool = True,
+) -> tuple[int, int]:
+    """Synthetic Outlook emails for BI Bali monitoring (no Azure credentials)."""
+    seed_keywords(db)
+    subjects = [
+        "Update inflasi Bali — ringkasan koordinasi TPID",
+        "Undangan sosialisasi QRIS Bali untuk UMKM",
+        "Laporan media: sentimen publik terhadap BI Bali",
+        "Newsletter SERAMBI Bank Indonesia edisi terbaru",
+        "Penukaran uang rupiah di Bali — jadwal layanan",
+        "Clipping berita ekonomi Bali pariwisata",
+        "Feedback merchant terkait sistem pembayaran QRIS",
+        "Rekap mention media sosial KPwBI Bali minggu ini",
+    ]
+    senders = [
+        "media.monitor@example.com",
+        "umkm.bali@example.com",
+        "newsletter@bankindonesia.go.id",
+        "tpid.bali@example.go.id",
+        "clipping@example.com",
+    ]
+    created = 0
+    analyzed = 0
+    now = datetime.utcnow()
+    keywords = [k for k, _ in DEFAULT_KEYWORDS]
+
+    for i in range(count):
+        kw = random.choice(keywords)
+        roll = random.random()
+        if roll < 0.4:
+            body = random.choice(TEMPLATES_POSITIF).format(keyword=kw)
+            forced = "positif"
+        elif roll < 0.65:
+            body = random.choice(TEMPLATES_NEGATIF).format(keyword=kw)
+            forced = "negatif"
+        else:
+            body = random.choice(TEMPLATES_NETRAL).format(keyword=kw)
+            forced = "netral"
+
+        subject = random.choice(subjects)
+        text = f"Subject: {subject}\n\n{body}\n\nKeyword: {kw}"
+        posted_at = now - timedelta(
+            days=random.randint(0, 30), hours=random.randint(0, 23)
+        )
+        sender = random.choice(senders)
+        msg_id = f"outlook-demo-{i}-{random.randint(10000, 99999)}"
+
+        post = Post(
+            source="outlook",
+            source_post_id=msg_id,
+            author=sender,
+            text_raw=text,
+            url=f"https://outlook.office.com/mail/deeplink/demo/{msg_id}",
+            posted_at=posted_at,
+            keyword_matched=kw,
+        )
+        db.add(post)
+        try:
+            db.commit()
+            db.refresh(post)
+            created += 1
+        except IntegrityError:
+            db.rollback()
+            continue
+
+        if analyze:
+            _analyze_and_save(db, post, text, forced)
+            analyzed += 1
+
+    return created, analyzed

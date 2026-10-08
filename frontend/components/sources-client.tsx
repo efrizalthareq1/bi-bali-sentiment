@@ -376,6 +376,50 @@ export function SourcesClient() {
         </CardContent>
       </Card>
 
+      <Card>
+        <CardHeader>
+          <CardTitle>Outlook (Microsoft 365)</CardTitle>
+          <CardDescription>
+            Baca Inbox via Microsoft Graph. Isi di <code>backend/.env</code>:{" "}
+            <code>OUTLOOK_TENANT_ID</code>, <code>OUTLOOK_CLIENT_ID</code>,{" "}
+            <code>OUTLOOK_CLIENT_SECRET</code>, <code>OUTLOOK_MAILBOX</code> (izin app{" "}
+            <code>Mail.Read</code>). Atau tempel <code>OUTLOOK_ACCESS_TOKEN</code>{" "}
+            (delegated). Tanpa kredensial, pakai demo dulu.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-wrap gap-2">
+          <Button
+            size="sm"
+            disabled={busyId === "outlook"}
+            onClick={() => sync("outlook")}
+          >
+            <RefreshCw className="h-3.5 w-3.5" />
+            {busyId === "outlook" ? "Sync Outlook..." : "Sync Outlook (Graph API)"}
+          </Button>
+          <Button
+            size="sm"
+            variant="accent"
+            disabled={busyId === "outlook-demo"}
+            onClick={async () => {
+              setBusyId("outlook-demo");
+              setMessage(null);
+              setError(null);
+              try {
+                const r = await api.outlookDemo(40);
+                setMessage(r.message);
+                await load();
+              } catch (err) {
+                setError(err instanceof Error ? err.message : "Gagal demo Outlook");
+              } finally {
+                setBusyId(null);
+              }
+            }}
+          >
+            {busyId === "outlook-demo" ? "Membuat demo..." : "Demo Email Outlook (~40)"}
+          </Button>
+        </CardContent>
+      </Card>
+
       {loading ? (
         <p className="text-sm text-muted-foreground">Memuat status connector...</p>
       ) : (
@@ -384,8 +428,9 @@ export function SourcesClient() {
             const meta = statusMeta(src.status);
             const Icon = meta.icon;
             const canSync =
-              ["news", "x", "instagram", "tiktok", "youtube", "threads"].includes(src.id) &&
-              (src.status === "ready" || src.status === "connected");
+              ["news", "x", "instagram", "tiktok", "youtube", "threads", "outlook"].includes(
+                src.id
+              ) && (src.status === "ready" || src.status === "connected");
             return (
               <Card key={src.id}>
                 <CardHeader>

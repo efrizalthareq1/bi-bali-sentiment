@@ -12,6 +12,7 @@ from sqlalchemy.orm import Session
 from app.connectors.base import BaseConnector, ConnectorInfo, RawPost
 from app.connectors.instagram_connector import InstagramConnector
 from app.connectors.news_connector import NewsConnector
+from app.connectors.outlook_connector import OutlookConnector
 from app.connectors.threads_connector import ThreadsConnector
 from app.connectors.tiktok_connector import TikTokConnector
 from app.connectors.x_connector import XConnector
@@ -29,6 +30,7 @@ _LAST_SYNC: Dict[str, datetime] = {}
 def get_connectors() -> List[BaseConnector]:
     return [
         NewsConnector(),
+        OutlookConnector(),
         XConnector(),
         YouTubeConnector(),
         ThreadsConnector(),
@@ -121,11 +123,13 @@ def purge_demo_posts(db: Session, sources: Optional[List[str]] = None) -> int:
             Post.source_post_id.like("x-demo-%"),
             Post.source_post_id.like("ig-demo-%"),
             Post.source_post_id.like("tt-demo-%"),
+            Post.source_post_id.like("outlook-demo-%"),
             Post.source_post_id.like("profile-%"),
             Post.url.ilike("%example.com%"),
             Post.url.ilike("%watch?v=demo%"),
             Post.url.ilike("%/post/demo%"),
             Post.url.ilike("%threads.net/%/post/demo%"),
+            Post.url.ilike("%outlook.office.com%/demo/%"),
             # Official account timeline stubs / posts (we want netizen discussion)
             Post.author.ilike("bank_indonesia"),
             Post.author.ilike("BI_ProvinsiBali"),
@@ -161,7 +165,12 @@ def sync_connector(db: Session, connector_id: str, limit: int = 50) -> tuple[int
             else (
                 "Isi TIKTOK_CLIENT_KEY dan TIKTOK_CLIENT_SECRET, atau gunakan /ingest/tiktok-demo."
                 if connector_id == "tiktok"
-                else f"Connector {connector_id} belum dikonfigurasi (API key)."
+                else (
+                    "Isi OUTLOOK_TENANT_ID, OUTLOOK_CLIENT_ID, OUTLOOK_CLIENT_SECRET, "
+                    "OUTLOOK_MAILBOX (atau OUTLOOK_ACCESS_TOKEN), atau gunakan /ingest/outlook-demo."
+                    if connector_id == "outlook"
+                    else f"Connector {connector_id} belum dikonfigurasi (API key)."
+                )
             )
         )
 

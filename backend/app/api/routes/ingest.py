@@ -25,6 +25,7 @@ from app.schemas import (
 from app.services.dummy_data import (
     generate_dummy_posts,
     generate_instagram_hashtag_demo,
+    generate_outlook_demo,
     generate_tiktok_demo,
     seed_keywords,
 )
@@ -213,6 +214,22 @@ def ingest_tiktok_demo(
         keywords_created=keywords_created,
         analyzed=analyzed,
         message=f"Demo TikTok: {posts_created} post ({analyzed} dianalisis).",
+    )
+
+
+@router.post("/ingest/outlook-demo", response_model=SeedResult)
+def ingest_outlook_demo(
+    count: int = Query(40, ge=5, le=200),
+    db: Session = Depends(get_db),
+):
+    """Synthetic Outlook emails for testing (no Azure / Graph credentials)."""
+    keywords_created = seed_keywords(db)
+    posts_created, analyzed = generate_outlook_demo(db, count=count, analyze=True)
+    return SeedResult(
+        posts_created=posts_created,
+        keywords_created=keywords_created,
+        analyzed=analyzed,
+        message=f"Demo Outlook: {posts_created} email ({analyzed} dianalisis).",
     )
 
 

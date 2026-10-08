@@ -51,6 +51,7 @@ export function GlobalFilters({ value, onChange, keywords = [] }: Props) {
             <option value="manual">Manual</option>
             <option value="threads">Threads</option>
             <option value="youtube">YouTube</option>
+            <option value="outlook">Outlook</option>
           </select>
         </label>
         <label className="flex flex-col gap-1 text-xs text-muted-foreground">

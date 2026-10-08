@@ -146,3 +146,22 @@ Catatan: Graph API membatasi ~30 unique hashtag lookup per 7 hari; sync memakai 
 4. Caption masuk tabel `posts` (source=`tiktok`), lalu dianalisis oleh pipeline sentimen platform (LLM/InSet) — bukan skrip VADER terpisah.
 
 Query default: keyword BI Bali / QRIS Bali + hashtag `bibali`, `qrisbali`, dll., region `ID`.
+
+## Outlook (Microsoft Graph)
+
+1. Buat App Registration di [Azure Portal](https://portal.azure.com/) → **Microsoft Entra ID** → App registrations.
+2. Tambahkan Application permission **Mail.Read**, lalu **Grant admin consent**.
+3. Buat Client Secret.
+4. Isi `backend/.env`:
+   ```env
+   OUTLOOK_TENANT_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+   OUTLOOK_CLIENT_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+   OUTLOOK_CLIENT_SECRET=your_secret
+   OUTLOOK_MAILBOX=nama.anda@organisasi.com
+   OUTLOOK_FOLDER=inbox
+   OUTLOOK_LOOKBACK_DAYS=30
+   ```
+5. Sync dari **Sumber Data** → **Sync Outlook (Graph API)** atau `POST /sources/outlook/sync`.
+6. Tanpa Azure: tombol **Demo Email Outlook** / `POST /ingest/outlook-demo`.
+
+Email yang cocok keyword (BI Bali, QRIS, dll.) masuk `posts` dengan `source=outlook`, lalu dianalisis seperti sumber lain.

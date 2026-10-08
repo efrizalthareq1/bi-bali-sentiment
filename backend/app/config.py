@@ -50,6 +50,16 @@ class Settings(BaseSettings):
     tiktok_client_secret: str = ""
     tiktok_lookback_days: int = 30
 
+    # Microsoft Graph / Outlook Mail
+    outlook_tenant_id: str = ""
+    outlook_client_id: str = ""
+    outlook_client_secret: str = ""
+    outlook_mailbox: str = ""  # UPN / email to read (app-only)
+    outlook_folder: str = "inbox"
+    outlook_lookback_days: int = 30
+    # Optional: paste delegated Graph token (skips client_credentials)
+    outlook_access_token: str = ""
+
     @property
     def cors_origin_list(self) -> List[str]:
         return [o.strip() for o in self.cors_origins.split(",") if o.strip()]

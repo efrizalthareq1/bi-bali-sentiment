@@ -32,6 +32,7 @@ export const SOURCE_LABELS: Record<string, string> = {
   manual: "Manual",
   threads: "Threads",
   youtube: "YouTube",
+  outlook: "Outlook",
 };
 
 export const SENTIMENT_LABELS: Record<string, string> = {
