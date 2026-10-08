@@ -183,9 +183,10 @@ export function DashboardClient() {
       )}
 
       <TopicFocusBar
-        activeKeyword={isAcehFocus && !filters.keyword ? "BI Aceh" : filters.keyword}
+        activeKeyword={filters.keyword}
         onSelect={(topic) => {
           if (!topic) {
+            // "Semua": hapus fokus topik; tetap pakai query Aceh yang luas
             setFilters({
               source: filters.source,
               sentiment: filters.sentiment,
@@ -198,7 +199,7 @@ export function DashboardClient() {
           setFilters({
             ...filters,
             keyword: topic.keyword,
-            q: topic.q || "",
+            q: topic.q || topic.keyword,
           });
         }}
       />
