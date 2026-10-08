@@ -115,10 +115,10 @@ Hashtag prioritas: `#BankIndonesiaAceh` `#BIAceh` `#BIBandaAceh` `#KPwBIAceh`
 
 ## Deployment
 
-**Cloud (direkomendasikan):** Frontend → **Vercel**, Backend + Postgres → **Railway**  
-→ panduan langkah demi langkah: [DEPLOY-VERCEL-RAILWAY.md](./DEPLOY-VERCEL-RAILWAY.md)
+**Cloud (direkomendasikan):** Frontend → **Vercel**, Backend → **Render** (tanpa Railway)  
+→ panduan: [DEPLOY-VERCEL-RENDER.md](./DEPLOY-VERCEL-RENDER.md)
 
-Alternatif Docker / VPS: [DEPLOY.md](./DEPLOY.md)
+Alternatif: Railway ([DEPLOY-VERCEL-RAILWAY.md](./DEPLOY-VERCEL-RAILWAY.md)) · Fly.io (`backend/fly.toml`) · Docker/VPS ([DEPLOY.md](./DEPLOY.md))
 
 ## Instagram Hashtag Search
 

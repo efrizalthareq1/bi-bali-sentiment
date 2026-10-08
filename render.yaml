@@ -1,0 +1,23 @@
+# Blueprint Render — backend FastAPI (tanpa Railway)
+# Deploy: Dashboard Render → Blueprints → New Blueprint Instance → repo ini
+
+services:
+  - type: web
+    name: bi-aceh-sentiment-api
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.8"
+      - key: CORS_ORIGINS
+        value: https://bi-bali-sentiment.vercel.app
+      - key: ENABLE_SCHEDULER
+        value: "true"
+      - key: LLM_PROVIDER
+        value: none
+      - key: DATABASE_URL
+        value: sqlite:///./data/sentiment.db
